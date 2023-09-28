@@ -21,6 +21,11 @@ class Books(APIView):
         prices = []
         for p in price:
             prices.append(p.text[1:])
+        
+        categories = soup.find_all("ul", class_="nav nav-list")
+        book_cat = []
+        for category in categories:
+            book_cat = category.text.split()
 
         books_and_prices = []
 
@@ -30,6 +35,6 @@ class Books(APIView):
             else:
                 instock="Out of stock!"
 
-            books_and_prices.append({"name": titles[title], "price": prices[title], "instock": instock})
+            books_and_prices.append({"name": titles[title], "price": prices[title], "category": book_cat[title], "instock": instock})
 
         return Response({'Books': books_and_prices}, status=status.HTTP_200_OK)
