@@ -3,7 +3,7 @@
 
 This project consists of two apps:
 
-1. **Bookstore API**: An API that provides fictional book titles, prices, stock availability, and categories.
+1. *Bookstore API*: An API that provides fictional book titles, prices, stock availability, and categories.
 
 2. **Quotes App**: An app that delivers inspirational quotes.
 
