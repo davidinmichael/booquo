@@ -13,7 +13,7 @@ class Books(APIView):
         books_and_prices = []
         books_list = []
 
-        for i in range(1, 51):
+        for i in range(1, 6):
             response = requests.get(f"http://books.toscrape.com/catalogue/page-{i}.html")
             data = response.text
             soup = bs4.BeautifulSoup(data, "lxml")
@@ -49,8 +49,9 @@ class Books(APIView):
                                   instock=item["instock"])
             books_list.append(book_instances)
 
-        Books.objects.bulk_create(books_list)
+        Books.object.bulk_create(books_list)
         books_data = Books.objects.all()
         serializer = BookSerializer(books_data, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
