@@ -50,6 +50,7 @@ class Books(APIView):
             books_list.append(book_instances)
 
         Books.objects.bulk_create(books_list)
-        serializer = BookSerializer(book_instances, many=True)
+        books_data = Books.objects.all()
+        serializer = BookSerializer(books_data, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
