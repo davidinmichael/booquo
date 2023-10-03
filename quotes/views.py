@@ -33,7 +33,7 @@ class Quotes(APIView):
 
 class AllAuthors(APIView):
     def get(self, request):
-        authors = Quote.objects.values_list("author", flat=True)
-        # authors = Quote.objects.all()
+        # authors = Quote.objects.values_list("author", flat=True)
+        authors = Quote.objects.all()
         serializer = AuthorSerializer(authors, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
