@@ -35,11 +35,11 @@ class Books(APIView):
         #     for category in categories:
         #         book_cat = category.text.split()
 
-        #     for title in range(len(titles)):
-        #         if len(titles[title]) >= 15:
-        #             instock = "Instock"
-        #         else:
-        #             instock="Out of stock!"
+            # for title in range(len(titles)):
+            #     if len(titles[title]) >= 15:
+            #         instock = "Instock"
+            #     else:
+            #         instock="Out of stock!"
 
         #         books_and_prices.append({"name": titles[title], "price": prices[title], "category": book_cat[title], "instock": instock})
         # for item in books_and_prices:
