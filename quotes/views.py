@@ -27,5 +27,13 @@ class Quotes(APIView):
         #         Quote.objects.create(author=author_s[item], quote=quote_s[item])
         
         all_quotes = Quote.objects.all()
-        serializer = QuoteSerialiazer(all_quotes, many=True)
+        serializer = QuoteSerializer(all_quotes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AllAuthors(APIView):
+    def get(self, request):
+        authors = Quote.objects.values_list("author", flat=True)
+        # authors = Quote.objects.all()
+        serializer = AuthorSerializer(authors, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
