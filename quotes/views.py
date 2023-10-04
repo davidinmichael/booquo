@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 import requests
 import lxml
 from bs4 import BeautifulSoup
@@ -8,7 +9,7 @@ from .models import Quote
 from .serializers import *
 
 
-class Quotes(APIView):
+class Quotes(APIView, PageNumberPagination):
     def get(self, request):
 
         # All books were scrapped, with the information below
@@ -27,8 +28,10 @@ class Quotes(APIView):
         #         Quote.objects.create(author=author_s[item], quote=quote_s[item])
         
         all_quotes = Quote.objects.all()
-        serializer = QuoteSerializer(all_quotes, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response = self.paginate_queryset(all_quotes, request, view=self)
+        serializer = QuoteSerializer(response, many=True)
+        return self.get_paginated_response(serializer.data)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class AllAuthors(APIView):

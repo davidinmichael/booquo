@@ -71,7 +71,6 @@ from .serializers import *
     
 
 class Books(APIView, PageNumberPagination):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def get(self, request):
         books_data = Book.objects.all()
         response = self.paginate_queryset(books_data, request, view=self)
@@ -84,5 +83,3 @@ class Books(APIView, PageNumberPagination):
         }
 
         return self.get_paginated_response(data)
-
-        # return Response(serializer.data, status=status.HTTP_200_OK)
