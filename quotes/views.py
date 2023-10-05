@@ -33,6 +33,15 @@ class Quotes(APIView, PageNumberPagination):
         return self.get_paginated_response(serializer.data)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
+class SingleQuote(APIView):
+    def get(self, request, id):
+        try:
+            quote = Quote.objects.get(id=id)
+        except Quote.DoesNotExist:
+            return Response({"message": "Oops, Quote not found"}, status.HTTP_404_NOT_FOUND)
+        serializer = QuoteSerializer(quote)
+        return Response(serializer.data, status.HTTP_200_OK)
+
 
 class AllAuthors(APIView):
     def get(self, request):
