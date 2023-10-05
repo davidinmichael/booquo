@@ -83,3 +83,13 @@ class Books(APIView, PageNumberPagination):
         }
 
         return self.get_paginated_response(data)
+
+class SingleBook(APIView):
+
+    def get(self, request, id):
+        try:
+            book = Book.objects.get(id=id)
+        except Book.DoesNotExist:
+            return Response({"message": "Oops, Book not found."}, status=status.HTTP_404_NOT_FOUND)
+        serializer = BookSerializer(book)
+        return Response(serializer.data, status=status.HTTP_200_OK)
