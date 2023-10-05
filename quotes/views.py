@@ -2,12 +2,31 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from email.message import EmailMessage
+import smtplib
+import ssl
 import requests
 import lxml
 from bs4 import BeautifulSoup
 from .models import Quote
 from .serializers import *
 
+def send_emails(receiver, body):
+    sender = "davidinmichael@gmail.com"
+    password = "trplzetkubdspzuq"
+
+    subject = "Daily Quotes"
+    context = ssl.create_default_context()
+
+    obj = EmailMessage()
+    obj["From"] = sender
+    obj["To"] = receiver
+    obj["subject"] = subject
+    obj.set_content(body)
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+        smtp.login(sender, password)
+        smtp.sendmail(sender, receiver, obj.as_string())
 
 class Quotes(APIView, PageNumberPagination):
     def get(self, request):
@@ -39,6 +58,8 @@ class SingleQuote(APIView):
             quote = Quote.objects.get(id=id)
         except Quote.DoesNotExist:
             return Response({"message": "Oops, Quote not found"}, status.HTTP_404_NOT_FOUND)
+        # message = f"{quote.quote}\nby {quote.author}"
+        # send_emails("ilightwears@gmail.com", message)
         serializer = QuoteSerializer(quote)
         return Response(serializer.data, status.HTTP_200_OK)
 
