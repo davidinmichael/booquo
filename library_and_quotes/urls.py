@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.schemas import get_schema_view
+from rest_framework.schemas import get_schema_view as scv
 from django.views.generic import TemplateView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api_schema/", get_schema_view(
+    path("api_schema/", scv(
         title="Booquo API",
         description="An API that return books and quotes",
         version=1.0), name="api_schema"),
