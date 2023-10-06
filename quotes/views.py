@@ -49,6 +49,7 @@ class Quotes(APIView, PageNumberPagination):
         all_quotes = Quote.objects.all()
         response = self.paginate_queryset(all_quotes, request, view=self)
         serializer = QuoteSerializer(response, many=True)
+        # serializer = QuoteSerializer(all_quotes, many=True)
         return self.get_paginated_response(serializer.data)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
