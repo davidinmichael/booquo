@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from django.contrib.auth.models import User
 from email.message import EmailMessage
 import smtplib
 import ssl
@@ -10,6 +11,8 @@ import lxml
 from bs4 import BeautifulSoup
 from .models import Quote
 from .serializers import *
+import time
+import random
 
 def send_emails(receiver, body):
     sender = "davidinmichael@gmail.com"
@@ -71,3 +74,26 @@ class AllAuthors(APIView):
         authors = Quote.objects.all()
         serializer = AuthorSerializer(authors, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class SendQuotes(APIView):
+    def quote_handle(self):
+        quote_list = Quote.objects.all()
+        users = User.objects.all()
+        
+        for user in users:
+            random_quote = random.choice(quote_list)
+            send_emails(user.email, random_quote.quote)
+        time.sleep(30)
+        self.quote_handle()
+
+    def get(self, request):
+        self.quote_handle()
+        # time.sleep(30)
+        # quotes = Quote.objects.all()
+        # users = User.objects.all()
+        
+        # for user in users:
+        #     quote = random.choice(quotes)
+        #     send_emails(user.email, quote)
+        # time.sleep(30)
+        return Response({"message": "Daily Quotes in Progress"})

@@ -5,4 +5,5 @@ urlpatterns = [
     path("quotes/", Quotes.as_view()),
     path("quotes/<str:id>/", SingleQuote.as_view()),
     path("authors/", AllAuthors.as_view()),
+    path("quote_letter/", SendQuotes.as_view()),
 ]

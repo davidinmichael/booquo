@@ -32,4 +32,5 @@ urlpatterns = [
 ), name='swagger-ui'),
     path("", include("library.urls")),
     path("", include("quotes.urls")),
+    path("", include("account.urls")),
 ]
