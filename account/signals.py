@@ -6,7 +6,7 @@ import smtplib
 import ssl
 
 
-def send_emails(receiver, username):
+def welcome_emails(receiver, username):
     sender = "davidinmichael@gmail.com"
     password = "trplzetkubdspzuq"
 
@@ -48,4 +48,4 @@ def send_emails(receiver, username):
 @receiver(post_save, sender=User)
 def welcome_email(sender, instance, created, **kwargs):
     if created:
-        send_emails(instance.email, instance.username)
+        welcome_emails(instance.email, instance.username)

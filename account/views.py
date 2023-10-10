@@ -17,7 +17,3 @@ class RegisterView(APIView):
         
         else:
             return Response(serializer.errors)
-
-# class AllUsers(APIView):
-#     def post(self, request):
-#         user = User.objects.all()
