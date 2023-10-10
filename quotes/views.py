@@ -14,7 +14,7 @@ from .serializers import *
 import time
 import random
 
-def send_emails(receiver, body):
+def send_emails(receiver, body, author):
     sender = "davidinmichael@gmail.com"
     password = "trplzetkubdspzuq"
 
@@ -25,7 +25,29 @@ def send_emails(receiver, body):
     obj["From"] = sender
     obj["To"] = receiver
     obj["subject"] = subject
-    obj.set_content(body)
+    obj.set_content(f"{body}\n- {author}")
+    obj.add_alternative(
+        f"""
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color: #311b92; font-family: Arial, sans-serif; color: #ffffff; text-align: center;">
+    <div style="background-color: #673ab7; padding: 20px;">
+        <h1 style="color: #ffffff;">Quote of the Day</h1>
+    </div>
+    <div style="padding: 20px;">
+        <p>{body}</p>
+        <p>- {author}</p>
+    </div>
+    <div style="padding: 20px;">
+        <a href="https://twitter.com/davidinmichael" style="background-color: #673ab7; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Twitter</a>
+        <a href="https://linkedin.com/in/davidinmichael" style="color: #ffffff; text-decoration: none;">Linkedin</a>
+    </div>
+</body>
+</html>
+""", subtype="html")
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
         smtp.login(sender, password)
@@ -82,7 +104,7 @@ class SendQuotes(APIView):
         
         for user in users:
             random_quote = random.choice(quote_list)
-            send_emails(user.email, random_quote.quote)
+            send_emails(user.email, random_quote.quote, random_quote.author)
         time.sleep(30)
         self.quote_handle()
 
