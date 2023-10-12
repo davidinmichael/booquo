@@ -33,4 +33,5 @@ urlpatterns = [
     path("", include("library.urls")),
     path("", include("quotes.urls")),
     path("", include("account.urls")),
+    path("", include("kanye_quotes.urls")),
 ]

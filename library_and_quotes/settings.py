@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "library",
     "quotes",
     "account",
+    "kanye_quotes",
 ]
 
 MIDDLEWARE = [

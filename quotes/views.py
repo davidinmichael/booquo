@@ -90,3 +90,4 @@ class SendQuotes(APIView):
     def get(self, request):
         self.quote_handle()
         return Response({"message": "Daily Quotes in Progress"})
+
