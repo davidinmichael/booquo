@@ -4,6 +4,7 @@ from rest_framework.response import Response
 import requests
 
 
+
 class KanyeQuotes(APIView):
     def get(self, request):
         url = "https://api.kanye.rest/"
