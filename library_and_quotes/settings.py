@@ -77,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'library_and_quotes.wsgi.application'
 
-CELERY_BROKER_URL = "redis://127.0.0.1:8000/6379"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
